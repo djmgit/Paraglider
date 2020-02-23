@@ -19,7 +19,7 @@ type IptableConstantsHolder struct {
 	Tcp string
 }
 
-type TcpHealthCheck struct {
+type TcpHealthCheckHolder struct {
 	TargetIP string
 	TargetPort int
 	Threshold int
