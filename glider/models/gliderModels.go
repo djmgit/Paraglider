@@ -18,3 +18,10 @@ type IptableConstantsHolder struct {
 	Snat string
 	Tcp string
 }
+
+type TcpHealthCheck struct {
+	TargetIP string
+	TargetPort int
+	Threshold int
+	TImeOut int
+}
