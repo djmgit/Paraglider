@@ -25,3 +25,12 @@ type TcpHealthCheckHolder struct {
 	Threshold int
 	TimeOut int
 }
+
+type HTTPHealthCheckHolder struct {
+	TargetIP string
+	TargetPort int
+	Threshold int
+	TimeOut int
+	HealthCheckPath string
+	PassMessage string
+}
