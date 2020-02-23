@@ -1,6 +1,6 @@
 package models
 
-type TargetBackend struct {
+type TargetBackendHolder struct {
 	LbName string
 	BackendName string
 	BackendIP string
@@ -9,10 +9,11 @@ type TargetBackend struct {
 	LbPort int
 }
 
-type IptableConstants struct {
+type IptableConstantsHolder struct {
 	Prerouting string
 	Postrouting string
-	nat string
-	dnat string
-	snat string
+	Nat string
+	Dnat string
+	Snat string
+	Tcp string
 }
