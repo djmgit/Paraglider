@@ -23,5 +23,5 @@ type TcpHealthCheckHolder struct {
 	TargetIP string
 	TargetPort int
 	Threshold int
-	TImeOut int
+	TimeOut int
 }
