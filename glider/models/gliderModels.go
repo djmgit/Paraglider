@@ -7,6 +7,7 @@ type TargetBackendHolder struct {
 	BackendPort int
 	LbIp string
 	LbPort int
+	LbPrivateIP string
 }
 
 type IptableConstantsHolder struct {
