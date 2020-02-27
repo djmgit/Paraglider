@@ -34,3 +34,18 @@ type HTTPHealthCheckHolder struct {
 	HealthCheckPath string
 	PassMessage string
 }
+
+type BackendMemberHolder struct {
+	Name string
+	Members []string
+}
+
+type FrontendHolder struct {
+	Name string
+	bind string
+	backend string
+}
+
+type config struct {
+
+}
