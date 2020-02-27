@@ -47,5 +47,6 @@ type FrontendHolder struct {
 }
 
 type config struct {
-
+	Backends []BackendMemberHolder
+	Frontend []FrontendHolder
 }
