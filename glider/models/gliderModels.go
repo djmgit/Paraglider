@@ -1,4 +1,5 @@
 package models
+import "gopkg.in/yaml.v2"
 
 type TargetBackendHolder struct {
 	LbName string
@@ -42,11 +43,14 @@ type BackendMemberHolder struct {
 
 type FrontendHolder struct {
 	Name string
-	bind string
-	backend string
+	Bind string
+	Backends []string
 }
 
-type config struct {
-	Backends []BackendMemberHolder
-	Frontend []FrontendHolder
+type Config struct {
+	Frontend FrontendHolder
+}
+
+func (c *Config) Parse(data []byte) error {
+	return yaml.Unmarshal(data, c)
 }

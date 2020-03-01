@@ -12,7 +12,7 @@ func main() {
 	c1 := *c
 
 	fmt.Println("\n")
-	fmt.Println(c1.Backends[0].Name)
-	fmt.Println(c1.Frontends[0].Name)
+	//fmt.Println(c1.Backends[0])
+	fmt.Println(c1.Frontend.Name)
 
 }
