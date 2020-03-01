@@ -21,7 +21,7 @@ func CreateTargetForLb(TargetBackend models.TargetBackendHolder) error {
 	if err != nil {
 		return err
 	}
-	err = ipt.AppendUnique(iptableConstants.Nat, iptableConstants.Prerouting, "-p", iptableConstants.Tcp, "-d", TargetBackend.LbIp, "--dport", string(TargetBackend.LbPort), "-j", iptableConstants.Dnat, "--to-destination", TargetBackend.BackendIP + ":" + string(TargetBackend.BackendPort))
+	err = ipt.AppendUnique(iptableConstants.Nat, iptableConstants.Prerouting, "-p", iptableConstants.Tcp, "-d", TargetBackend.LbIP, "--dport", string(TargetBackend.LbPort), "-j", iptableConstants.Dnat, "--to-destination", TargetBackend.BackendIP + ":" + string(TargetBackend.BackendPort))
 
 	if err != nil {
 		return err
@@ -31,7 +31,7 @@ func CreateTargetForLb(TargetBackend models.TargetBackendHolder) error {
 
 	if err != nil {
 
-		_ = ipt.Delete(iptableConstants.Nat, iptableConstants.Prerouting, "-p", iptableConstants.Tcp, "-d", TargetBackend.LbIp, "--dport", string(TargetBackend.LbPort), "-j", iptableConstants.Dnat, "--to-destination", TargetBackend.BackendIP + ":" + string(TargetBackend.BackendPort))
+		_ = ipt.Delete(iptableConstants.Nat, iptableConstants.Prerouting, "-p", iptableConstants.Tcp, "-d", TargetBackend.LbIP, "--dport", string(TargetBackend.LbPort), "-j", iptableConstants.Dnat, "--to-destination", TargetBackend.BackendIP + ":" + string(TargetBackend.BackendPort))
 
 		return err
 	}

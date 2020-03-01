@@ -2,11 +2,11 @@ package models
 import "gopkg.in/yaml.v2"
 
 type TargetBackendHolder struct {
-	LbName string
-	BackendName string
+	//LbName string
+	//BackendName string
 	BackendIP string
 	BackendPort int
-	LbIp string
+	LbIP string
 	LbPort int
 	LbPrivateIP string
 }
@@ -44,6 +44,7 @@ type BackendMemberHolder struct {
 type FrontendHolder struct {
 	Name string
 	Bind string
+	PrivateIP string
 	Backends []string
 }
 
