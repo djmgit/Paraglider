@@ -23,7 +23,7 @@ func glide(yamlconfig string) {
 
 	backendTargets := make([]models.TargetBackendHolder, 1, 1)
 
-	for index, backend := range config.Frontend.Backends {
+	for _, backend := range config.Frontend.Backends {
 
 		backendAddr := strings.Split(backend, ":")
 		backendHost := backendAddr[0]
@@ -40,4 +40,29 @@ func glide(yamlconfig string) {
 	}
 }
 
+func addBackendTargets(backendTargets *[]models.TargetBackendHolder) error {
+
+	for _, backendTarget := range *backendTargets {
+		err := glidercore.CreateTargetForLb(backendTarget)
+
+		if err != nil {
+			return err
+		}
+	}
+
+	return nil
+}
+
+func removeBackendTargets(backendTargets *[]models.TargetBackendHolder) error {
+
+	for _, backendTarget := range *backendTargets {
+		err := glidercore.RemoveTargetForLb(backendTarget)
+
+		if err != nil {
+			return err
+		}
+	}
+
+	return nil
+}
 
