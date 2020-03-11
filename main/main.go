@@ -1,18 +1,35 @@
 package main
 
 import (
-	"paraglider/glider/yamlparser"
+	//"paraglider/glider/glide"
+	"flag"
+	"os"
 	"fmt"
+	"strings"
 )
 
 func main() {
-	c, _ := yamlparser.ParseYaml("../sketch.yaml")
 
-	fmt.Println("+v\n", *c)
-	c1 := *c
+	yamlConfigFile := "/etc/paraglider/glider.yaml"
+	flag.StringVar(&yamlConfigFile, "config", yamlConfigFile, "Path to configuration file")
 
-	fmt.Println("\n")
-	//fmt.Println(c1.Backends[0])
-	fmt.Println(c1.Frontend.Name)
+	flag.Parse()
+	args := flag.Args()
 
+	if _, err := os.Stat(yamlConfigFile); os.IsNotExist(err) {
+		fmt.Println("File does not exists")
+		os.Exit(2)
+	}
+
+	if len(args) != 1 {
+		fmt.Println("Invalid number of arguments provided")
+		os.Exit(2)
+	}
+
+	action := strings.ToLower(args[0])
+
+	if action != "start" && action != "stop" {
+		fmt.Println("Invalid action provided. Action can be either of start|stop")
+		os.Exit(2)
+	}
 }
