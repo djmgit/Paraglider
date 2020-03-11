@@ -19,7 +19,7 @@ func glide(yamlconfig string) {
 	frontendAddr := strings.Split(config.Frontend.Bind, ":")
 	frontendHost := frontendAddr[0]
 	frontendPort, err := strconv.Atoi(frontendAddr[1])
-	frontendPrivateIP := config.LbPrivateIP
+	frontendPrivateIP := config.Frontend.PrivateIP
 
 	backendTargets := make([]models.TargetBackendHolder, 1, 1)
 

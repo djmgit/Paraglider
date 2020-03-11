@@ -46,7 +46,7 @@ func RemoveTargetForLb(TargetBackend models.TargetBackendHolder) error {
 		return err
 	}
 
-	err = ipt.AppendUnique(iptableConstants.Nat, iptableConstants.Postrouting, "-p", iptableConstants.Tcp, "-d", TargetBackend.BackendIP, "--dport", string(TargetBackend.BackendPort), "-j", iptableConstants.Snat, "--to-source", TargetBackend.LbPrivateIP)
+	err = ipt.Delete(iptableConstants.Nat, iptableConstants.Prerouting, "-p", iptableConstants.Tcp, "-d", TargetBackend.LbIP, "--dport", string(TargetBackend.LbPort), "-j", iptableConstants.Dnat, "--to-destination", TargetBackend.BackendIP + ":" + string(TargetBackend.BackendPort))
 
 	if err != nil {
 		return  err
@@ -54,7 +54,7 @@ func RemoveTargetForLb(TargetBackend models.TargetBackendHolder) error {
 
 	time.Sleep(5 * time.Second)
 
-	err = ipt.AppendUnique(iptableConstants.Nat, iptableConstants.Postrouting, "-p", iptableConstants.Tcp, "-d", TargetBackend.BackendIP, "--dport", string(TargetBackend.BackendPort), "-j", iptableConstants.Snat, "--to-source", TargetBackend.LbPrivateIP)
+	err = ipt.Delete(iptableConstants.Nat, iptableConstants.Postrouting, "-p", iptableConstants.Tcp, "-d", TargetBackend.BackendIP, "--dport", string(TargetBackend.BackendPort), "-j", iptableConstants.Snat, "--to-source", TargetBackend.LbPrivateIP)
 
 	if err != nil {
 		return err
