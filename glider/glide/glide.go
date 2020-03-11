@@ -41,9 +41,19 @@ func Glide(yamlconfig, lbStartStop string) {
 		})
 	}
 
-	fmt.Println(yamlconfig)
-	fmt.Println(lbStartStop)
-	fmt.Println(backendTargets[0].LbIP)
+	if lbStartStop == "start" {
+		err = addBackendTargets(&backendTargets)
+
+		if err != nil {
+			fmt.Println("Unable to add backends")
+		}
+	} else {
+		err = removeBackendTargets(&backendTargets)
+
+		if err != nil {
+			fmt.Println("Unabel to remove backends")
+		}
+	}
 }
 
 func addBackendTargets(backendTargets *[]models.TargetBackendHolder) error {
