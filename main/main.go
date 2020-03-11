@@ -1,7 +1,7 @@
 package main
 
 import (
-	//"paraglider/glider/glide"
+	"paraglider/glider/glide"
 	"flag"
 	"os"
 	"fmt"
@@ -32,4 +32,6 @@ func main() {
 		fmt.Println("Invalid action provided. Action can be either of start|stop")
 		os.Exit(2)
 	}
+
+	glide.Glide(yamlConfigFile, action)
 }

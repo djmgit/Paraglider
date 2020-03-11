@@ -6,13 +6,15 @@ import (
 	"paraglider/glider/models"
 	"strings"
 	"strconv"
+	"fmt"
 )
 
-func glide(yamlconfig string) {
+func Glide(yamlconfig, lbStartStop string) {
 
 	config, err := yamlparser.ParseYaml(yamlconfig)
 
 	if err != nil {
+		fmt.Println("Could not parse config file.")
 		return
 	}
 
@@ -27,9 +29,9 @@ func glide(yamlconfig string) {
 
 		backendAddr := strings.Split(backend, ":")
 		backendHost := backendAddr[0]
-		backendPort, err := strconv.Atoi(backendAddr[1])
+		backendPort, _ := strconv.Atoi(backendAddr[1])
 
-		append(backendTargets, models.TargetBackendHolder{
+		backendTargets = append(backendTargets, models.TargetBackendHolder{
 			BackendIP: backendHost,
 			BackendPort: backendPort,
 			LbIP: frontendHost,
@@ -38,6 +40,10 @@ func glide(yamlconfig string) {
 
 		})
 	}
+
+	fmt.Println(yamlconfig)
+	fmt.Println(lbStartStop)
+	fmt.Println(backendTargets[0].LbIP)
 }
 
 func addBackendTargets(backendTargets *[]models.TargetBackendHolder) error {
