@@ -44,10 +44,10 @@ func Glide(yamlconfig, lbStartStop string) {
 	}
 
 	if lbStartStop == "start" {
-		err = addBackendTargets(backendTargets)
+		err = addBackendTargets(&backendTargets)
 
 		if err != nil {
-			fmt.Println("%v\n", err)
+			fmt.Printf("%v\n", err)
 			fmt.Println("Unable to add backends")
 		}
 	} else {
@@ -59,9 +59,9 @@ func Glide(yamlconfig, lbStartStop string) {
 	}
 }
 
-func addBackendTargets(backendTargets []models.TargetBackendHolder) error {
+func addBackendTargets(backendTargets *[]models.TargetBackendHolder) error {
 
-	for _, backendTarget := range backendTargets {
+	for _, backendTarget := range *backendTargets {
 		err := glidercore.CreateTargetForLb(backendTarget)
 
 		if err != nil {
