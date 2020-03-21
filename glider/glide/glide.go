@@ -11,7 +11,8 @@ import (
 
 func Glide(yamlconfig, lbStartStop string) {
 
-	config, err := yamlparser.ParseYaml(yamlconfig)
+	configPointer, err := yamlparser.ParseYaml(yamlconfig)
+	config := *configPointer
 
 	if err != nil {
 		fmt.Println("Could not parse config file.")
@@ -23,7 +24,7 @@ func Glide(yamlconfig, lbStartStop string) {
 	frontendPort, err := strconv.Atoi(frontendAddr[1])
 	frontendPrivateIP := config.Frontend.PrivateIP
 
-	backendTargets := make([]models.TargetBackendHolder, 1, 1)
+	backendTargets := make([]models.TargetBackendHolder, 0, 0)
 
 	for _, backend := range config.Frontend.Backends {
 
@@ -31,9 +32,10 @@ func Glide(yamlconfig, lbStartStop string) {
 		backendHost := backendAddr[0]
 		backendPort, _ := strconv.Atoi(backendAddr[1])
 
+
 		backendTargets = append(backendTargets, models.TargetBackendHolder{
 			BackendIP: backendHost,
-			BackendPort: backendPort,
+			BackendPort: int(backendPort),
 			LbIP: frontendHost,
 			LbPort: frontendPort,
 			LbPrivateIP: frontendPrivateIP,
@@ -42,9 +44,10 @@ func Glide(yamlconfig, lbStartStop string) {
 	}
 
 	if lbStartStop == "start" {
-		err = addBackendTargets(&backendTargets)
+		err = addBackendTargets(backendTargets)
 
 		if err != nil {
+			fmt.Println("%v\n", err)
 			fmt.Println("Unable to add backends")
 		}
 	} else {
@@ -56,9 +59,9 @@ func Glide(yamlconfig, lbStartStop string) {
 	}
 }
 
-func addBackendTargets(backendTargets *[]models.TargetBackendHolder) error {
+func addBackendTargets(backendTargets []models.TargetBackendHolder) error {
 
-	for _, backendTarget := range *backendTargets {
+	for _, backendTarget := range backendTargets {
 		err := glidercore.CreateTargetForLb(backendTarget)
 
 		if err != nil {
