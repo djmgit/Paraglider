@@ -77,12 +77,15 @@ func addBackendTargets(backendTargets *[]models.TargetBackendHolder) error {
 
 func removeBackendTargets(backendTargets *[]models.TargetBackendHolder) error {
 
+	roundRobinTurn := len(*backendTargets)
 	for _, backendTarget := range *backendTargets {
-		err := glidercore.RemoveTargetForLb(backendTarget)
+		err := glidercore.RemoveTargetForLb(backendTarget, roundRobinTurn)
 
 		if err != nil {
 			return err
 		}
+
+		roundRobinTurn -= 1
 	}
 
 	return nil
