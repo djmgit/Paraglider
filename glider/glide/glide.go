@@ -61,12 +61,15 @@ func Glide(yamlconfig, lbStartStop string) {
 
 func addBackendTargets(backendTargets *[]models.TargetBackendHolder) error {
 
+	roundRobinTurn := len(*backendTargets)
 	for _, backendTarget := range *backendTargets {
-		err := glidercore.CreateTargetForLb(backendTarget)
+		err := glidercore.CreateTargetForLb(backendTarget, roundRobinTurn)
 
 		if err != nil {
 			return err
 		}
+
+		roundRobinTurn -= 1
 	}
 
 	return nil
