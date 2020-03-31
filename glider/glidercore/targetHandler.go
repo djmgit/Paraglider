@@ -49,14 +49,18 @@ func CreateTargetForLb(TargetBackend models.TargetBackendHolder, roundRobinTurn 
 	return nil
 }
 
-func RemoveTargetForLb(TargetBackend models.TargetBackendHolder) error {
+func RemoveTargetForLb(TargetBackend models.TargetBackendHolder, roundRobinTurn int) error {
 
 	ipt, err := iptables.New()
 	if err != nil {
 		return err
 	}
 
-	err = ipt.Delete(iptableConstants.Nat, iptableConstants.Prerouting, "-p", iptableConstants.Tcp, "-d", TargetBackend.LbIP, "--dport", strconv.Itoa(TargetBackend.LbPort), "-j", iptableConstants.Dnat, "--to-destination", TargetBackend.BackendIP + ":" + strconv.Itoa(TargetBackend.BackendPort))
+	if roundRobinTurn != 0 {
+		err = ipt.Delete(iptableConstants.Nat, iptableConstants.Prerouting, "-p", iptableConstants.Tcp, "-d", TargetBackend.LbIP, "--dport", strconv.Itoa(TargetBackend.LbPort), "-m statistic --mode nth --every", strconv.Itoa(roundRobinTurn), "--packet 0", "-j", iptableConstants.Dnat, "--to-destination", TargetBackend.BackendIP + ":" + strconv.Itoa(TargetBackend.BackendPort))
+	} else {
+		err = ipt.Delete(iptableConstants.Nat, iptableConstants.Prerouting, "-p", iptableConstants.Tcp, "-d", TargetBackend.LbIP, "--dport", strconv.Itoa(TargetBackend.LbPort), "-j", iptableConstants.Dnat, "--to-destination", TargetBackend.BackendIP + ":" + strconv.Itoa(TargetBackend.BackendPort))
+	}
 
 	if err != nil {
 		return  err
