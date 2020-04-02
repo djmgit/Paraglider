@@ -9,7 +9,7 @@ the device which needs to serve as a load balancer is low end, less powerfull.
 
 The following sections will show how to get quickly started with Paraglider.
 
-### Installing paraglider from binaries
+### Using prebuilt Paraglider binary
 
 - Download prebuild Paraglider binary from here.
 - Unzip the tar file using ```tar xvf Paraglider-0.1.1```
