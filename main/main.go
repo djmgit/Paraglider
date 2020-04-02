@@ -10,7 +10,10 @@ import (
 
 func main() {
 
+	// Default configuration file for paraglider
 	yamlConfigFile := "/etc/paraglider/glider.yaml"
+
+	// Optionally provide path of custom config file using command line argument
 	flag.StringVar(&yamlConfigFile, "config", yamlConfigFile, "Path to configuration file")
 
 	flag.Parse()
