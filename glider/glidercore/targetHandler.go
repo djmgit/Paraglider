@@ -3,7 +3,6 @@ package glidercore
 import (
 	"github.com/djmgit/go-iptables/iptables"
 	"paraglider/glider/models"
-	"time"
 	"strconv"
 )
 
