@@ -13,6 +13,8 @@ func ParseYaml(yamlPath string) (*models.Config, error) {
 	}
 
 	config := models.Config{}
+
+	// Parse the read content of the file as YAML
 	err = config.Parse(data)
 
 	if err != nil {
