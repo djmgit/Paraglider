@@ -15,3 +15,12 @@ The following sections will show how to get quickly started with Paraglider.
 - Unzip the tar file using ```tar xvf Paraglider-0.1.1```
 - Once unmpressed, you will find the paraglider binary file.
 - You can run paraglider using ```./paraglider -config </path/to/config> <start|stop>```
+
+### Building binary from source
+
+- Clone/Download this repo into your go path.
+- Navigate into the repo and ```cd``` into main
+- Run ```go get .```
+- After running the above go command run ```go build -o paraglider .```
+- If the above commands run successfully, you will find the paraglider binary file generated.
+- You can run paraglider using ```./paraglider -config </path/to/config> <start|stop>```
