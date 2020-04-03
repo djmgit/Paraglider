@@ -46,6 +46,17 @@ In the above sample yaml, ```frontend``` is the root object which contains the f
 - ```bind```: The adress to which the load balancer will bind it self. The coresponding interface should be attached to the
   network to which the users/clients are connected to, ie, the users should be able to reach this IP.
   Optionally this can be same as the private IP.
-- ```privae```: This is he ip which should be reachable by the target backends. In other words this IP should correspond to
-  the interface which is connected to the network to which the target backends are also connected. Optionally as aleady
-  mentioned, this IP can be same as the ```bind``` IP.
+  
+- ```privateip```: This is he ip which should be reachable by the target backends. In other words this IP should 
+  correspond to the interface which is connected to the network to which the target backends are also connected. 
+  Optionally as aleady mentioned, this IP can be same as the ```bind``` IP.
+  
+- ```backends```: Listof target backends. Backends should be in the format ```<IP>:<PORY>
+
+### Starting and Stoppomg Paraglider
+
+Paraglider can be started using ```./paraglider [-config] [config file] start ```
+It can be stopped using ```./paraglider [-config] [config_file] stop```
+
+## How Paraglider works 
+
