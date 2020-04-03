@@ -51,12 +51,20 @@ In the above sample yaml, ```frontend``` is the root object which contains the f
   correspond to the interface which is connected to the network to which the target backends are also connected. 
   Optionally as aleady mentioned, this IP can be same as the ```bind``` IP.
   
-- ```backends```: Listof target backends. Backends should be in the format ```<IP>:<PORY>
+- ```backends```: Listof target backends. Backends should be in the format ```<IP>:<PORY>```. Paraglider will traffic to
+  these backends in round robin fashion.
 
 ### Starting and Stoppomg Paraglider
 
 Paraglider can be started using ```./paraglider [-config] [config file] start ```
+
 It can be stopped using ```./paraglider [-config] [config_file] stop```
 
 ## How Paraglider works 
 
+Under the hood, Paraglider uses Linux iptable rules to manipulate how packets headed for ```bind``` IP is treated.
+This is usually done by adding ```DNAT``` rule in the NAT table in ```PREROUTING``` chain and ```SNAT``` rule in NAT table in
+```POSTROUTING```.
+
+The round robin packet distribution between target backends is achieved usin the statistic module whcih comes along with
+iptables.
