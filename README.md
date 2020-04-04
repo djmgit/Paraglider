@@ -11,7 +11,7 @@ The following sections will show how to get quickly started with Paraglider.
 
 ### Using prebuilt Paraglider binary
 
-- Download prebuild Paraglider binary from here.
+- Download prebuild Paraglider binary from [here](https://github.com/djmgit/Paraglider/releases/download/v0.1.1/paraglider-0.1.1.tar.gz).
 - Unzip the tar file using ```tar xvf Paraglider-<version>.tar```
 - Once unmpressed, you will find the paraglider binary file.
 - You can run paraglider using ```./paraglider -config </path/to/config> <start|stop>```
