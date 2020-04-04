@@ -1,9 +1,9 @@
 # Paraglider
 
-Paraglider is a golang based tool to convert any linux host into a TCP load balancer using iptable rules. Paraglider can be used
-in situations where you do not want to use a heavy weight, full blown load balancer, but a minimalistic, lightweight 
-TCP load balancer to load balance between given backends. One such usecase for Paraglider can be light weight IOT 
-projects where the device which needs to serve as a load balancer is low end and less powerfull.
+Paraglider is a golang based tool to convert any Linux host into a TCP load balancer using iptable rules. Paraglider can be used
+in situations where you do not want to use a heavy weight, full blown load balancer, but a minimalistic, lightweight
+TCP load balancer to load balance between given backends. One such use case for Paraglider can be lightweight IOT
+projects where the device which needs to serve as a load balancer is low end and less powerful.
 
 ## Quick start
 
@@ -11,14 +11,14 @@ The following sections will show how to get quickly started with Paraglider.
 
 ### Using prebuilt Paraglider binary
 
-- Download prebuild Paraglider binary from [here](https://github.com/djmgit/Paraglider/releases/download/v0.1.1/paraglider-0.1.1.tar.gz).
+- Download prebuilt Paraglider binary from [here](https://github.com/djmgit/Paraglider/releases/download/v0.1.1/paraglider-0.1.1.tar.gz).
 - Unzip the tar file using ```tar xvf Paraglider-<version>.tar```
-- Once unmpressed, you will find the paraglider binary file.
+- Once uncompressed, you will find the paraglider binary file.
 - You can run paraglider using ```./paraglider -config </path/to/config> <start|stop>```
 
 ### Building binary from source
 
-- Please make sure you have golang setup and go path is also setup.
+- Please make sure you have a golang setup and a go path is also set up.
 - Clone/Download this repo into your go path.
 - Navigate into the repo and ```cd``` into ```main```.
 - Run ```go get .```
@@ -45,26 +45,26 @@ frontend:
 
 In the above sample yaml, ```frontend``` is the root object which contains the following properties:
 
-- ```bind```: The adress to which the load balancer will bind itself. The coresponding interface should be attached to the
-  network to which the users/clients are connected to, ie, the users should be able to reach this IP.
-  Optionally this can be same as the private IP.
-  
-- ```privateip```: This is he ip which should be reachable by the target backends. In other words this IP should 
-  correspond to the interface which is connected to the network to which the target backends are also connected. 
-  Optionally as aleady mentioned, this IP can be same as the ```bind``` IP.
-  
-- ```backends```: Listof target backends. Backends should be in the format ```<IP>:<PORT>```. Paraglider will send traffic to
+- ```bind```: The address to which the load balancer will bind itself. The corresponding interface should be attached to the
+  network to which the users/clients are connected to, i.e., the users should be able to reach this IP.
+  Optionally this can be the same as the private IP.
+
+- ```privateip```: This is the ip which should be reachable by the target backends. In other words this IP should
+  correspond to the interface which is connected to the network to which the target backends are also connected.
+  Optionally as already mentioned, this IP can be the same as the ```bind``` IP.
+
+- ```backends```: List of target backends. Backends should be in the format ```<IP>:<PORT>```. Paraglider will send traffic to
   these backends in round robin fashion.
 
 ### Starting and Stopping Paraglider
 
-Paraglider can be started using ```./paraglider [-config] [config file] start ```
+Paraglider can be started using ```./paraglider [-config] [config file] start```
 
 It can be stopped using ```./paraglider [-config] [config_file] stop```
 
-## How Paraglider works 
+## How Paraglider works
 
-Under the hood, Paraglider uses Linux iptable rules to manipulate how packets headed for ```bind``` IP is treated.
+Under the hood, Paraglider uses Linux iptable rules to manipulate how packets headed for ```bind``` IP are treated.
 This is done by adding ```DNAT``` rule in the NAT table in ```PREROUTING``` chain and ```SNAT``` rule in NAT table in
 ```POSTROUTING``` chain of the host where the load balancer is running.
 
@@ -72,12 +72,12 @@ So, when a packet arrives at the load balancer server and if its destination IP 
 destination port is the ```bind``` port, then Paraglider via ```iptables``` will change the destination ip and
 port to one of the target backend's IP and port.
 
-Similarly, the packet which is now headed for one of the target backends must know that they must return back to the 
+Similarly, the packet which is now headed for one of the target backends must know that they must return back to the
 load balancer server and for this source natting is used. Before the packet leaves the load balancer host, the source
-adress of the packet is changed to the ```privateip``` of the load balancer box. It is to be noted here that, there is
+address of the packet is changed to the ```privateip``` of the load balancer box. It is to be noted here that, there is
 nothing special with ```privateip```. Any IP attached to the host and which is in the same network as the target backends
 can be used. It can even be same with the ```bind``` ip if the client, the load balancer host and the target backends
 all are in the same network.
 
-The round robin packet distribution between target backends is achieved usin the statistic module whcih comes along with
+The round robin packet distribution between target backends is achieved using the statistic module which comes along with
 iptables.
