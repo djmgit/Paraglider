@@ -53,7 +53,7 @@ In the above sample yaml, ```frontend``` is the root object which contains the f
   correspond to the interface which is connected to the network to which the target backends are also connected. 
   Optionally as aleady mentioned, this IP can be same as the ```bind``` IP.
   
-- ```backends```: Listof target backends. Backends should be in the format ```<IP>:<PORY>```. Paraglider will traffic to
+- ```backends```: Listof target backends. Backends should be in the format ```<IP>:<PORT>```. Paraglider will send traffic to
   these backends in round robin fashion.
 
 ### Starting and Stopping Paraglider
